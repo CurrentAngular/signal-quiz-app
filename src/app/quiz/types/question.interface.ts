@@ -1,5 +1,5 @@
-export interface Question {
-	readonly question: string;
-	readonly correctAnswer: string;
-	readonly correctAnswers: string[];
+export interface QuestionInterface {
+  readonly question: string;
+  readonly correctAnswer: string;
+  readonly incorrectAnswers: string[];
 }

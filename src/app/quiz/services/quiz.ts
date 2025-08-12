@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Question } from '../question/question';
+import { computed, Injectable, signal } from '@angular/core';
+import { QuestionInterface } from '../types/question.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Quiz {
-  getMockQuestions(): Question[] {
+  #currentQuestionIndex = signal<number>(0);
+
+  #mockQuestions(): QuestionInterface[] {
     return [
       {
         question: 'What does CSS stand for?',
@@ -16,7 +18,6 @@ export class Quiz {
         ],
         correctAnswer: 'Cascading Style Sheets',
       },
-
       {
         question:
           'Where in an HTML document is the correct place to refer to an external style sheet?',
@@ -71,4 +72,19 @@ export class Quiz {
       },
     ];
   }
+
+  readonly questions = signal(this.#mockQuestions()).asReadonly();
+  readonly questionsCount = signal(this.#mockQuestions().length).asReadonly();
+
+  readonly currentQuestionIndex = signal<number>(
+    this.#currentQuestionIndex(),
+  ).asReadonly();
+
+  readonly currentQuestionIndexShow = computed(
+    () => this.#currentQuestionIndex() + 1,
+  );
+
+  readonly currentQuestion = computed(
+    () => this.#mockQuestions()[this.currentQuestionIndex()].question,
+  );
 }
