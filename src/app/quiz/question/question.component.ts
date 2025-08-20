@@ -1,0 +1,13 @@
+import { Component, inject } from '@angular/core';
+import { AnswerComponent } from '../answer/answer.component';
+import { QuizService } from '../services/quiz.service';
+
+@Component({
+  selector: 'aq-question',
+  imports: [AnswerComponent],
+  templateUrl: './question.component.html',
+  styleUrl: './question.component.scss',
+})
+export class QuestionComponent {
+  readonly quiz = inject(QuizService);
+}

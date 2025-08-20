@@ -4,7 +4,7 @@ import { QuestionInterface } from '../types/question.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class Quiz {
+export class QuizService {
   #currentQuestionIndex = signal<number>(0);
 
   #mockQuestions(): QuestionInterface[] {
