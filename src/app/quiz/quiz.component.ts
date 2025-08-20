@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { QuestionComponent } from './question/question.component';
-import { QuizService } from './services/quiz.service';
+import { QuizService } from './services';
 
 @Component({
   selector: 'aq-quiz',
