@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { QuestionInterface } from '../types/question.interface';
+import { QuestionInterface } from '../types';
 
 @Injectable({
   providedIn: 'root',
