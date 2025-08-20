@@ -80,7 +80,7 @@ export class Quiz {
     this.#currentQuestionIndex(),
   ).asReadonly();
 
-  readonly currentQuestionIndexShow = computed(
+  readonly currentQuestionIndexToShow = computed(
     () => this.#currentQuestionIndex() + 1,
   );
 
