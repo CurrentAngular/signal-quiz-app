@@ -5,7 +5,7 @@
 }
 
 .score {
-	background: #fff;
+	background: var(--white);
 	color: 000;
 	font-size: 18px;
 	width: 200px;
@@ -20,8 +20,8 @@
 
 .next-button {
 	margin: 0 auto;
-	color: #fff;
-	background: #0b0e21;
+	color: var(--white);
+	background-color: var(--black);
 	width: 300px;
 	font-size: 18px;
 	font-weight: 600;
@@ -32,16 +32,16 @@
 }
 
 .results {
-	background-color: #fff;
+	background-color: var(--white);
 	height: 300px;
 	text-align: center;
 }
 
 .congratulations {
-	background-color: #0094da;
+	background-color: var(--blue);
 	padding: 20px;
 	font-size: 36px;
-	color: #fff;
+	color: var(--white);
 }
 
 .results-info {

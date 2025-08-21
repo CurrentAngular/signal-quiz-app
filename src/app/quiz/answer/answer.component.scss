@@ -1,6 +1,6 @@
 :host {
 	width: 48%;
-	background: #fff;
+	background-color: var(--white);
 	cursor: pointer;
 	margin-bottom: 30px;
 }
@@ -8,13 +8,13 @@
 .answer {
 	display: flex;
 	min-height: 70px;
-	border: 2px solid #0094da;
+	border: 2px solid var(--blue);
 }
 
 .answer-letter {
 	font-size: 30px;
-	background-color: #0084da;
-	color: #fff;
+	background-color: var(--blue);
+	color: var(--white);
 	width: 70px;
 	display: flex;
 	align-items: center;
@@ -29,19 +29,19 @@
 }
 
 .correct-answer {
-	border: 2px solid #1ea55b;
+	border: 2px solid var(--green);
 }
 
 .correct-answer .answer-letter {
-	background: #1ea55b;
+	background-color: var(--green);
 }
 
 .wrong-answer {
-	border: 2px solid #dc0a0a;
+	border: 2px solid var(--red);
 }
 
 .wrong-answer .answer-letter {
-	background: #dc0a0a;
+	background-color: var(--red);
 }
 
 .disabled-answer {
