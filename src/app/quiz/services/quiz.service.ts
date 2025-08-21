@@ -76,7 +76,7 @@ export class QuizService {
   readonly questions = signal(this.#mockQuestions()).asReadonly();
   readonly questionsCount = signal(this.#mockQuestions().length).asReadonly();
 
-  readonly currentQuestionIndex = signal<number>(
+  readonly currentQuestionIndex = signal(
     this.#currentQuestionIndex(),
   ).asReadonly();
 
