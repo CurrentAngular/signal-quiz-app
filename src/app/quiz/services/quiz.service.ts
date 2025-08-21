@@ -5,7 +5,7 @@ import { QuestionInterface } from '../types';
   providedIn: 'root',
 })
 export class QuizService {
-  #currentQuestionIndex = signal<number>(0);
+  #currentQuestionIndex = signal(0);
 
   #mockQuestions(): QuestionInterface[] {
     return [
