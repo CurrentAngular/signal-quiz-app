@@ -1,3 +1,9 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .quiz {
 	width: 975px;
 	margin: 0 auto;
@@ -5,17 +11,16 @@
 }
 
 .score {
-	background: var(--white);
-	color: 000;
+  @include flex-center;
+
+	background-color: var(--white);
+	color: var(--black);
 	font-size: 18px;
 	width: 200px;
 	margin: 0 auto;
 	font-weight: 600;
 	height: 40px;
 	margin-bottom: 30px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 
 .next-button {
@@ -27,7 +32,6 @@
 	font-weight: 600;
 	padding: 14px 75px;
 	text-transform: uppercase;
-	cursor: pointer;
 	text-align: center;
 }
 
@@ -38,10 +42,10 @@
 }
 
 .congratulations {
+	color: var(--white);
 	background-color: var(--blue);
 	padding: 20px;
 	font-size: 36px;
-	color: var(--white);
 }
 
 .results-info {

@@ -6,3 +6,14 @@
 	--white: #fff;
 	--black: #0b0e21;
 }
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+}
