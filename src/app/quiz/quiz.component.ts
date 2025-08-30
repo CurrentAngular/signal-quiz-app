@@ -9,5 +9,5 @@ import { QuizService } from './services';
   styleUrl: './quiz.component.scss',
 })
 export class QuizComponent {
-  readonly quiz = inject(QuizService);
+  readonly store = inject(QuizService);
 }

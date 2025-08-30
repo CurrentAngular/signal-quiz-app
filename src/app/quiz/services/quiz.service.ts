@@ -73,18 +73,41 @@ export class QuizService {
     ];
   }
 
+  /** Массив вопросов */
   readonly questions = signal(this.#mockQuestions()).asReadonly();
+
+  /** Колличество вопросов */
   readonly questionsCount = signal(this.#mockQuestions().length).asReadonly();
 
-  readonly currentQuestionIndex = signal(
-    this.#currentQuestionIndex(),
-  ).asReadonly();
-
+  /** Индекс текущего вопроса для отображения в UI */
   readonly currentQuestionIndexToShow = computed(
     () => this.#currentQuestionIndex() + 1,
   );
 
+  /** Текущий вопрос */
   readonly currentQuestion = computed(
-    () => this.#mockQuestions()[this.currentQuestionIndex()].question,
+    () => this.#mockQuestions()[this.#currentQuestionIndex()].question,
+  );
+
+  /** Индекс текущего вопроса */
+  readonly currentQuestionIndex = signal(
+    this.#currentQuestionIndex(),
+  ).asReadonly();
+
+  /** Переход к следующему вопросу */
+  nextQuestion(): void {
+    const currentIndex = this.showResult()
+      ? this.#currentQuestionIndex()
+      : this.#currentQuestionIndex() + 1;
+    this.#currentQuestionIndex.set(currentIndex);
+  }
+
+  /** Перезапуск игры */
+  restart(): void {
+    this.#currentQuestionIndex.set(0);
+  }
+
+  readonly showResult = computed(
+    () => this.#currentQuestionIndex() === this.#mockQuestions().length - 1,
   );
 }

@@ -1,7 +1,18 @@
 <div class="quiz">
-	<div>
-		<div class="score">Question {{ quiz.currentQuestionIndexToShow() }}/{{ quiz.questionsCount() }}</div>
-		<aq-question />
-		<div class="next-button">Next question</div>
-	</div>
+  @if(store.showResult()) {
+  <div class="results">
+    <h3 class="congratulations">Поздравления!</h3>
+    <div class="results-info">
+      <div class="results-info-title">Вы успешно завершили игру!!</div>
+      <div class="">Вы правильно ответили на 2 вопроса из {{ store.questionsCount() }} вопросов.</div>
+    </div>
+    <div class="next-button" (click)="store.restart()">restart</div>
+  </div>
+  } @else {
+  <div>
+    <div class="score">Question {{ store.currentQuestionIndexToShow() }}/{{ store.questionsCount() }}</div>
+    <aq-question />
+    <div class="next-button" (click)="store.nextQuestion()">Next question</div>
+  </div>
+  }
 </div>
