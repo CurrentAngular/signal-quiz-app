@@ -1,9 +1,8 @@
 <div>
-	<div class="question">{{ quiz.currentQuestion() }}</div>
-	<div class="answers">
-		<aq-answer />
-		<aq-answer />
-		<aq-answer />
-		<aq-answer />
-	</div>
+  <div class="question">{{ quiz.currentQuestion() }}</div>
+  <div class="answers">
+    @for (answer of quiz.currentQuestionAnswers(); track $index) {
+    <aq-answer [answer]="answer" [index]="$index" />
+    }
+  </div>
 </div>

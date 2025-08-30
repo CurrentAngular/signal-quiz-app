@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { QuizService } from '../services';
 
 @Component({
@@ -8,4 +8,10 @@ import { QuizService } from '../services';
 })
 export class AnswerComponent {
   readonly quiz = inject(QuizService);
+  readonly answer = input.required<string>();
+  readonly index = input.required<number>();
+
+  #LETTERS = ['a', 'b', 'c', 'd'];
+
+  readonly letter = computed(() => this.#LETTERS[this.index()].toUpperCase());
 }

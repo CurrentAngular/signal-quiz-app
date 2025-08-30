@@ -110,4 +110,9 @@ export class QuizService {
   readonly showResult = computed(
     () => this.#currentQuestionIndex() === this.#mockQuestions().length - 1,
   );
+
+  readonly currentQuestionAnswers = computed(() => [
+    this.#mockQuestions()[this.#currentQuestionIndex()].correctAnswer,
+    ...this.#mockQuestions()[this.#currentQuestionIndex()].incorrectAnswers,
+  ]);
 }
