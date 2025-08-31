@@ -1,5 +1,5 @@
 <div>
-  <div class="question">{{ quiz.currentQuestion() }}</div>
+  <div class="question">{{ quiz.currentQuestion().question }}</div>
   <div class="answers">
     @for (answer of quiz.currentQuestionAnswers(); track $index) {
     <aq-answer [answer]="answer" [index]="$index" />

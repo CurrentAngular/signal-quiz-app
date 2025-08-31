@@ -86,7 +86,7 @@ export class QuizService {
 
   /** Текущий вопрос */
   readonly currentQuestion = computed(
-    () => this.#mockQuestions()[this.#currentQuestionIndex()].question,
+    () => this.#mockQuestions()[this.#currentQuestionIndex()],
   );
 
   /** Индекс текущего вопроса */
@@ -111,8 +111,21 @@ export class QuizService {
     () => this.#currentQuestionIndex() === this.#mockQuestions().length - 1,
   );
 
-  readonly currentQuestionAnswers = computed(() => [
-    this.#mockQuestions()[this.#currentQuestionIndex()].correctAnswer,
-    ...this.#mockQuestions()[this.#currentQuestionIndex()].incorrectAnswers,
-  ]);
+  /** Массив ответов на вопрос */
+  readonly currentQuestionAnswers = computed(() =>
+    this.#shuffleAnswers(this.currentQuestion()),
+  );
+
+  /** Сортировка ответов в случайном порядке */
+  #shuffleAnswers(question: QuestionInterface): string[] {
+    const { correctAnswer, incorrectAnswers } = question;
+
+    return [correctAnswer, ...incorrectAnswers]
+      .map((answer) => ({
+        id: Math.random(),
+        value: answer,
+      }))
+      .sort((a, b) => a.id - b.id)
+      .map((object) => object.value);
+  }
 }
