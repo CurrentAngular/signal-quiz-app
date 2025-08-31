@@ -99,6 +99,8 @@ export class QuizService {
     const currentIndex = this.showResult()
       ? this.#currentQuestionIndex()
       : this.#currentQuestionIndex() + 1;
+
+    this.#currentAnswer.set(null);
     this.#currentQuestionIndex.set(currentIndex);
   }
 
@@ -127,5 +129,21 @@ export class QuizService {
       }))
       .sort((a, b) => a.id - b.id)
       .map((object) => object.value);
+  }
+
+  #currentAnswer = signal<string | null>(null);
+  readonly currentAnswer = this.#currentAnswer.asReadonly();
+
+  #correctAnswersCount = signal<number>(0);
+  readonly correctAnswersCount = this.#correctAnswersCount.asReadonly();
+
+  selectAnswer(answer: string): void {
+    this.#currentAnswer.set(answer);
+    const correctAnswersCount =
+      answer === this.currentQuestion().correctAnswer
+        ? this.#correctAnswersCount() + 1
+        : this.#correctAnswersCount();
+
+    this.#correctAnswersCount.set(correctAnswersCount);
   }
 }
