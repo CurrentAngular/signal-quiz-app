@@ -26,6 +26,13 @@ export class QuizService {
     this.#questions.set(questions);
   }
 
+  #error = signal<string | null>(null);
+  readonly error = this.#error.asReadonly();
+
+  setError(message: string): void {
+    this.#error.set(message);
+  }
+
   /** Колличество вопросов */
   readonly questionsCount = signal(this.questions().length).asReadonly();
 

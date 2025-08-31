@@ -1,7 +1,13 @@
 <div class="quiz">
+  @if(store.error()) {
+  <aq-error-notification />
+  }
+
   @if(store.showResult()) {
   <aq-congratulations />
-  } @else if(store.questions().length > 0) {
+  }
+
+  @if(store.questions().length > 0) {
   <div>
     <div class="score">Question {{ store.currentQuestionIndexToShow() }}/{{ store.questionsCount() }}</div>
     <aq-question />
