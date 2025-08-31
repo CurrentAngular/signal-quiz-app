@@ -1,83 +1,33 @@
-import { computed, Injectable, signal } from '@angular/core';
-import { QuestionInterface } from '../types';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import {
+  QuestionBackendInterface,
+  QuestionInterface,
+  QuestionsResponse,
+} from '../types';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+
+const URL =
+  'https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple&encode=url3986';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuizService {
+  #http = inject(HttpClient);
+
   #currentQuestionIndex = signal(0);
 
-  #mockQuestions(): QuestionInterface[] {
-    return [
-      {
-        question: 'What does CSS stand for?',
-        incorrectAnswers: [
-          'Computer Style Sheets',
-          'Creative Style Sheets',
-          'Colorful Style Sheets',
-        ],
-        correctAnswer: 'Cascading Style Sheets',
-      },
-      {
-        question:
-          'Where in an HTML document is the correct place to refer to an external style sheet?',
-        incorrectAnswers: [
-          'In the <body> section',
-          'At the end of the document',
-          "You can't refer to an external style sheet",
-        ],
-        correctAnswer: 'In the <head> section',
-      },
-      {
-        question: 'Which HTML tag is used to define an internal style sheet?',
-        incorrectAnswers: ['<script>', '<headStyle>', '<css>'],
-        correctAnswer: '<style>',
-      },
-      {
-        question: 'Which HTML attribute is used to define inline styles?',
-        incorrectAnswers: ['class', 'font', 'styles'],
-        correctAnswer: 'style',
-      },
-      {
-        question: 'Which is the correct CSS syntax?',
-        incorrectAnswers: [
-          '{body:color=black;}',
-          '{body;color:black;}',
-          'body:color=black;',
-        ],
-        correctAnswer: 'body {color: black;}',
-      },
-      {
-        question: 'How do you insert a comment in a CSS file?',
-        incorrectAnswers: [
-          "' this is a comment",
-          '// this is a comment',
-          '// this is a comment //',
-        ],
-        correctAnswer: '/* this is a comment */',
-      },
-      {
-        question: 'Which property is used to change the background color?',
-        incorrectAnswers: ['color', 'bgcolor', 'bgColor'],
-        correctAnswer: 'background-color',
-      },
-      {
-        question: 'How do you add a background color for all <h1> elements?',
-        incorrectAnswers: [
-          'all.h1 {background-color:#FFFFFF;}',
-          'h1.setAll {background-color:#FFFFFF;}',
-          'h1.all {background-color:#FFFFFF;}',
-        ],
-        correctAnswer: 'h1 {background-color:#FFFFFF;}',
-      },
-    ];
+  /** Массив вопросов */
+  #questions = signal<QuestionInterface[]>([]);
+  readonly questions = this.#questions.asReadonly();
+
+  setQuestions(questions: QuestionInterface[]): void {
+    this.#questions.set(questions);
   }
 
-  /** Массив вопросов */
-  readonly questions = signal(this.#mockQuestions()).asReadonly();
-
   /** Колличество вопросов */
-  readonly questionsCount = signal(this.#mockQuestions().length).asReadonly();
+  readonly questionsCount = signal(this.questions().length).asReadonly();
 
   /** Индекс текущего вопроса для отображения в UI */
   readonly currentQuestionIndexToShow = computed(
@@ -86,7 +36,7 @@ export class QuizService {
 
   /** Текущий вопрос */
   readonly currentQuestion = computed(
-    () => this.#mockQuestions()[this.#currentQuestionIndex()],
+    () => this.questions()[this.#currentQuestionIndex()],
   );
 
   /** Индекс текущего вопроса */
@@ -110,7 +60,7 @@ export class QuizService {
   }
 
   readonly showResult = computed(
-    () => this.#currentQuestionIndex() === this.#mockQuestions().length - 1,
+    () => this.#currentQuestionIndex() === this.#questions().length - 1,
   );
 
   /** Массив ответов на вопрос */
@@ -145,5 +95,24 @@ export class QuizService {
         : this.#correctAnswersCount();
 
     this.#correctAnswersCount.set(correctAnswersCount);
+  }
+
+  // TODO: try to replace by httpResourse
+  getQuestions(): Observable<QuestionInterface[]> {
+    return this.#http
+      .get<QuestionsResponse>(URL)
+      .pipe(map(this.#questionsMapper));
+  }
+
+  #questionsMapper(questions: QuestionsResponse): QuestionInterface[] {
+    const temp = questions.results;
+
+    return temp.map((question: QuestionBackendInterface) => ({
+      question: decodeURIComponent(question.question),
+      correctAnswer: decodeURIComponent(question.correct_answer),
+      incorrectAnswers: question.incorrect_answers.map((answer: string) =>
+        decodeURIComponent(answer),
+      ),
+    }));
   }
 }

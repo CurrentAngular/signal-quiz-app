@@ -1,7 +1,7 @@
 <div>
-  <div class="question">{{ quiz.currentQuestion().question }}</div>
+  <div class="question">{{ store.currentQuestion().question }}</div>
   <div class="answers">
-    @for (answer of quiz.currentQuestionAnswers(); track $index) {
+    @for (answer of store.currentQuestionAnswers(); track $index) {
     <aq-answer [answer]="answer" [index]="$index" />
     }
   </div>
