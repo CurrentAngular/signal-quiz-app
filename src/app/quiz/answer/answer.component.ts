@@ -18,12 +18,14 @@ export class AnswerComponent {
 
   readonly letter = computed(() => this.#LETTERS[this.index()].toUpperCase());
 
+  /** Ответ верный */
   readonly isAnswerCorrect = computed(
     () =>
       !!this.store.currentAnswer() &&
       this.answer() === this.store.currentQuestion().correctAnswer,
   );
 
+  /** Ответ неверный */
   readonly isAnswerIncorrect = computed(
     () =>
       this.answer() === this.store.currentAnswer() &&

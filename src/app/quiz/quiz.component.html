@@ -13,7 +13,10 @@
   <div>
     <div class="score">Question {{ store.currentQuestionIndexToShow() }}/{{ store.questionsCount() }}</div>
     <aq-question />
+
+    @if(store.currentAnswer()) {
     <div class="next-button" (click)="store.nextQuestion()">Next question</div>
+    }
   </div>
   }
 </div>
